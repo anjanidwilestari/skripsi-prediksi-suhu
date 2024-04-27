@@ -10,6 +10,17 @@
       /* Atur warna latar belakang */
       body {
         background-color: #f5f5fa; /* Warna abu-abu */
+        margin-bottom: 60px; /* Sesuaikan dengan tinggi footer */
+      }
+
+      /* Gaya footer */
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 10px 0;
+        height: 60px; /* Sesuaikan dengan tinggi footer */
       }
     </style>
   </head>
@@ -23,10 +34,10 @@
           <!-- Form untuk prediksi suhu -->
           <form action="{{ url_for('predict') }}" method="post">
             <div class="mb-3">
-              <input type="text" class="form-control" id="Nh" name="Nh" placeholder="Masukkan nilai Nh (Jumlah Semua Awan)" required />
+              <input type="text" class="form-control" id="Nh" name="Nh" placeholder="Masukkan nilai Nh 0-100 (Jumlah Semua Awan)" pattern="^(100(\.0{1,2})?|[0-9]?[0-9](\.[0-9]{1,2})?)$" title="Masukkan nilai antara 0 hingga 100" required />
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control" id="T" name="T" placeholder="Masukkan nilai T (Target Suhu)" required />
+              <input type="text" class="form-control" id="T" name="T" placeholder="Masukkan nilai T (Target Suhu)" pattern="^((0)|([2][2-9]\.[6-9]|[3][0-5]\.[0-8])|36\.[0-8])$" title="Masukkan nilai antara 0, 22,6 hingga 36,8" required />
             </div>
             <div class="mb-3">
               <button type="submit" class="btn btn-warning w-100">Prediksi</button>
@@ -60,14 +71,16 @@
       </div>
       <!-- Tampilkan tabel prediksi jika ada -->
       {% if prediction_table %}
-      <div class="row justify-content-center mt-5">
+      <div class="row justify-content-center mt-3">
         <div class="col-md-8">
           <div class="text-center">
-            <h2>Hasil Prediksi</h2>
+            <div class="mb-3">
+              <h2>Hasil Prediksi</h2>
+            </div>
             <div class="table-responsive">{{ prediction_table | safe }}</div>
             <!-- Tombol download -->
             <div class="mb-3">
-              <a href="{{ download_link }}" class="btn btn-success mt-3">Download Prediksi</a>
+              <a href="{{ download_link }}" class="btn btn-warning mt-3">Download Prediksi</a>
             </div>
           </div>
         </div>
@@ -75,9 +88,10 @@
       {% endif %}
     </div>
     <!-- Footer -->
-    <!-- Footer -->
-    <div class="footer text-center mt-5" style="position: fixed; bottom: 0; width: 100%; background-color: #ffffff; padding: 10px 0">
+    <div class="footer text-center" style="background-color: #ffffff; padding: 10px 0">
       <p>&copy; 2024 Anjani Dwilestari &#174; - Skripsi</p>
     </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-+voBBN5F5BRf/x5s0j28rPdYorogHsTs+jTkVvk5UL0vEArUfweha0El+NyoXp+1" crossorigin="anonymous"></script>
   </body>
 </html>

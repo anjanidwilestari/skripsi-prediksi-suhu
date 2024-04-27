@@ -21,7 +21,7 @@ with open('scaler.pkl', 'rb') as f:
 
 @app.route("/")
 def hello():
-    return render_template('index-xy.html')
+    return render_template('index-2.html')
 
 @app.route("/predict", methods=['POST'])
 def predict():
@@ -30,13 +30,13 @@ def predict():
         Nh = float(request.form['Nh'])  # Ubah ke float
         T = float(request.form['T'])  # Ubah ke float
         output = make_prediction(Nh, T)
-        return render_template('index-xy.html', prediction_text=f"Prediksi Suhu berdasarkan Jumlah Awan {Nh} adalah {output} Celcius")
+        return render_template('index-2.html', prediction_text=f"Prediksi Suhu berdasarkan Jumlah Awan {Nh} adalah {output} Celcius")
 
     # Jika user mengunggah file Excel
     if 'file' in request.files:
         file = request.files['file']
         if file.filename == '':
-            return render_template('index-xy.html', prediction_text="Mohon pilih file terlebih dahulu.")
+            return render_template('index-2.html', prediction_text="Mohon pilih file terlebih dahulu.")
         if file:
             filename = secure_filename(file.filename)  # Perbaiki nama file
             if filename.endswith('.xlsx'):
@@ -54,7 +54,7 @@ def predict():
                 df.to_excel(output_path, index=False)
                 return send_file(output_path, as_attachment=True)
 
-    return render_template('index-xy.html', prediction_text="Mohon inputkan nilai Jumlah Awan dan T, atau unggah file Excel.")
+    return render_template('index-2.html', prediction_text="Mohon inputkan nilai Jumlah Awan dan T, atau unggah file Excel.")
 
 def make_prediction(Nh, T):
     # Normalisasi data input

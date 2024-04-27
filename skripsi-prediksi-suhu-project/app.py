@@ -44,7 +44,7 @@ with open('scaler.pkl', 'rb') as f:
 
 @app.route("/")
 def hello():
-    return render_template('index-xy.html')
+    return render_template('index.html')
 
 @app.route("/predict", methods=['POST'])
 def predict():
@@ -54,13 +54,13 @@ def predict():
         T = float(request.form['T'])  # Ubah ke float
         Nh_label = convert_to_label(Nh)  # Mengonversi Nh ke label angka
         output = make_prediction(Nh_label, T)  # Prediksi menggunakan Nh_label
-        return render_template('index-xy.html', prediction_text=f"Prediksi Suhu berdasarkan Jumlah Awan {Nh} ({Nh_label}) adalah {output} Celcius")
+        return render_template('index.html', prediction_text=f"Prediksi Suhu berdasarkan Jumlah Awan {Nh} ({Nh_label}) adalah {output} Celcius")
 
     # Jika user mengunggah file Excel
     if 'file' in request.files:
         file = request.files['file']
         if file.filename == '':
-            return render_template('index-xy.html', prediction_text="Mohon pilih file terlebih dahulu.")
+            return render_template('index.html', prediction_text="Mohon pilih file terlebih dahulu.")
         if file:
             filename = secure_filename(file.filename)  # Perbaiki nama file
             if filename.endswith('.xlsx'):
@@ -91,9 +91,9 @@ def predict():
                 output_path = os.path.join('downloads', filename)
                 prediction_df.to_excel(output_path, index=False)  # Simpan prediksi ke file Excel
                 
-                return render_template('index-xy.html', prediction_table=prediction_table, download_link=download_link)
+                return render_template('index.html', prediction_table=prediction_table, download_link=download_link)
 
-    return render_template('index-xy.html', prediction_text="Mohon inputkan nilai Jumlah Awan dan T, atau unggah file Excel.")
+    return render_template('index.html', prediction_text="Mohon inputkan nilai Jumlah Awan dan T, atau unggah file Excel.")
 
 
 def make_prediction(Nh_label, T):

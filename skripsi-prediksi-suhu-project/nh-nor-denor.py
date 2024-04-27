@@ -19,7 +19,7 @@ with open('scaler.pkl', 'rb') as f:
 
 @app.route("/")
 def hello():
-    return render_template('index.html')
+    return render_template('index-1.html')
 
 @app.route("/predict", methods=['POST'])
 def predict():
@@ -36,7 +36,7 @@ def predict():
     
     output = round(y_pred_denormalized[0], 8)
     
-    return render_template('index.html', prediction_text=f"Prediksi Suhu berdasarkan Jumlah Awan {Nh} adalah {output} Celcius")
+    return render_template('index-1.html', prediction_text=f"Prediksi Suhu berdasarkan Jumlah Awan {Nh} adalah {output} Celcius")
 
 if __name__ == "__main__":
     app.run()

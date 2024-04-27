@@ -83,17 +83,18 @@ def predict():
                 prediction_table = prediction_df.to_html(classes="table table-striped", index=False)
 
                 # Tambahkan tombol unduh untuk tabel prediksi
-                download_link = f"<p><a href='/download/{filename}'>Download predictions</a></p>"
-                
+                download_link = f"/download/{filename}"  # Mengarahkan ke endpoint unduhan
+
                 # Pastikan direktori 'downloads' ada
                 if not os.path.exists('downloads'):
                     os.makedirs('downloads')
-                output_path = os.path.join('downloads', 'predictions.xlsx')
-                df.to_excel(output_path, index=False)
+                output_path = os.path.join('downloads', filename)
+                prediction_df.to_excel(output_path, index=False)  # Simpan prediksi ke file Excel
                 
                 return render_template('index-xy.html', prediction_table=prediction_table, download_link=download_link)
 
     return render_template('index-xy.html', prediction_text="Mohon inputkan nilai Jumlah Awan dan T, atau unggah file Excel.")
+
 
 def make_prediction(Nh_label, T):
     # Normalisasi data input
